@@ -2,6 +2,9 @@
 # See: https://circleci.com/docs/reference/configuration-reference
 version: 2.1
 
+orbs:
+  ggshield: gitguardian/ggshield@volatile
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#jobs-overview & https://circleci.com/docs/reference/configuration-reference/#jobs
 jobs:
@@ -29,3 +32,9 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - say-hello
+  scan_my_commits:
+    jobs:
+      - ggshield/scan:
+          name: ggshield-scan
+          base_revision: <<pipeline.git.base_revision>>
+          revision: <<pipeline.git.revision>>
